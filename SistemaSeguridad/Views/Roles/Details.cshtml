@@ -1,0 +1,79 @@
+﻿@model SistemaSeguridad.Models.ViewModels.RoleViewModel
+@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "Detalle del rol";
+    var users = ViewBag.Users as System.Collections.IEnumerable;
+}
+
+<div class="mx-auto max-w-6xl">
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Detalle del rol</h1>
+        <p class="mt-1 text-sm text-slate-600">Información y usuarios asignados.</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-5">
+        <div class="lg:col-span-2">
+            <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div class="border-b border-slate-200 bg-slate-50 px-6 py-4">
+                    <p class="text-sm font-semibold text-slate-800">Información</p>
+                </div>
+                <div class="p-6 space-y-3">
+                    <div class="rounded-xl border border-slate-200 p-4">
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nombre</p>
+                        <p class="mt-1 text-sm font-semibold text-slate-900">@Model.Name</p>
+                    </div>
+
+                    <div class="rounded-xl border border-slate-200 p-4">
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Usuarios asignados</p>
+                        <p class="mt-1 text-sm font-semibold text-slate-900">@Model.UsersCount</p>
+                    </div>
+
+                    <div class="pt-2">
+                        <a asp-action="Index"
+                           class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                            <i class="bi bi-arrow-left"></i> Volver
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3">
+            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div class="border-b border-slate-200 bg-slate-50 px-6 py-4">
+                    <p class="text-sm font-semibold text-slate-800">Usuarios con este rol</p>
+                </div>
+
+                <div class="p-6">
+                    @if (ViewBag.Users == null || !((System.Collections.IEnumerable)ViewBag.Users).Cast<object>().Any())
+                    {
+                        <p class="text-sm text-slate-600">No hay usuarios asignados.</p>
+                    }
+                    else
+                    {
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-slate-200">
+                                <thead class="bg-white">
+                                    <tr class="text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                        <th class="px-4 py-3">Correo</th>
+                                        <th class="px-4 py-3">Usuario</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 bg-white">
+                                    @foreach (var u in ViewBag.Users)
+                                    {
+                                        <tr class="hover:bg-slate-50">
+                                            <td class="px-4 py-3 text-sm text-slate-700">@u.Email</td>
+                                            <td class="px-4 py-3 text-sm font-semibold text-slate-900">@u.UserName</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿@model SistemaSeguridad.Models.ViewModels.RoleViewModel
+@{
+    ViewData["Title"] = "Crear rol";
+}
+
+<div class="mx-auto max-w-2xl">
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Crear nuevo rol</h1>
+        <p class="mt-1 text-sm text-slate-600">Define un rol para asignarlo a usuarios.</p>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="border-b border-slate-200 bg-slate-50 px-6 py-4">
+            <p class="text-sm font-semibold text-slate-800">Datos del rol</p>
+        </div>
+
+        <div class="p-6">
+            <form asp-action="Create" method="post" class="space-y-5">
+                <div asp-validation-summary="ModelOnly" class="rounded-xl bg-rose-50 p-3 text-sm text-rose-700"></div>
+
+                <div>
+                    <label asp-for="Name" class="mb-1 block text-sm font-semibold text-slate-700"></label>
+                    <input asp-for="Name" placeholder="Ej: Administrador"
+                           class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100" />
+                    <span asp-validation-for="Name" class="mt-1 block text-xs text-rose-600"></span>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2">
+                    <a asp-action="Index"
+                       class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                        Cancelar
+                    </a>
+                    <button type="submit"
+                            class="rounded-xl bg-cyan-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-700">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

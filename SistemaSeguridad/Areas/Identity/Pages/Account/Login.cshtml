@@ -1,0 +1,158 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+
+<div class="min-h-[calc(100vh-64px)] bg-slate-100 py-10">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 lg:grid-cols-2 lg:items-stretch">
+
+        <!-- LADO IZQUIERDO: Branding -->
+        <div class="hidden rounded-3xl bg-slate-900 p-10 text-slate-100 shadow-sm lg:flex lg:flex-col lg:justify-between">
+            <div>
+                <div class="flex items-center gap-3">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/15 ring-1 ring-cyan-400/30">
+                        <i class="bi bi-diagram-3 text-cyan-300 text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold tracking-tight">SIGOT</h1>
+                        <p class="text-sm text-slate-300">Sistema de Gestión Operativa</p>
+                    </div>
+                </div>
+
+                <div class="mt-10 space-y-4">
+                    <p class="text-lg font-semibold leading-snug">
+                        Accede con tu cuenta para administrar el sistema.
+                    </p>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <i class="bi bi-check2-circle text-cyan-300 mt-0.5"></i>
+                            Control de acceso por permisos.
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="bi bi-check2-circle text-cyan-300 mt-0.5"></i>
+                            Gestión de roles y usuarios.
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="bi bi-check2-circle text-cyan-300 mt-0.5"></i>
+                            Interfaz SIGOT (sidebar + módulos).
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-400">
+                © @DateTime.Now.Year SIGOT — Seguridad y control de acceso.
+            </p>
+        </div>
+
+        <!-- LADO DERECHO: Form -->
+        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
+            <div class="mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-50 ring-1 ring-cyan-200">
+                        <i class="bi bi-box-arrow-in-right text-cyan-700"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold tracking-tight text-slate-900">Iniciar sesión</h2>
+                        <p class="text-sm text-slate-600">Ingresa con tu correo y contraseña.</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="account" method="post" class="space-y-5">
+                <div asp-validation-summary="ModelOnly"
+                     class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"></div>
+
+                <div>
+                    <label asp-for="Input.Email" class="mb-1 block text-sm font-semibold text-slate-700">Correo</label>
+                    <input asp-for="Input.Email"
+                           class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none
+                                  focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100"
+                           autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="mt-1 block text-xs text-rose-600"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Input.Password" class="mb-1 block text-sm font-semibold text-slate-700">Contraseña</label>
+                    <input asp-for="Input.Password"
+                           class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none
+                                  focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100"
+                           autocomplete="current-password" aria-required="true" placeholder="••••••••" />
+                    <span asp-validation-for="Input.Password" class="mt-1 block text-xs text-rose-600"></span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <label asp-for="Input.RememberMe" class="flex items-center gap-2 text-sm text-slate-700">
+                        <input asp-for="Input.RememberMe"
+                               class="h-4 w-4 rounded border-slate-300 text-cyan-600 focus:ring-cyan-200" />
+                        Recordarme
+                    </label>
+
+                    <a id="forgot-password" asp-page="./ForgotPassword"
+                       class="text-sm font-semibold text-cyan-700 hover:text-cyan-800">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <button id="login-submit" type="submit"
+                        class="w-full rounded-xl bg-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-700">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
+                </button>
+
+                <div class="flex flex-col gap-2 text-sm">
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"
+                       class="font-semibold text-slate-700 hover:text-slate-900">
+                        ¿No tienes cuenta? Regístrate
+                    </a>
+                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation"
+                       class="font-semibold text-slate-700 hover:text-slate-900">
+                        Reenviar confirmación de correo
+                    </a>
+                </div>
+            </form>
+
+            <!-- External logins -->
+            <div class="mt-8">
+                <div class="flex items-center gap-3">
+                    <div class="h-px flex-1 bg-slate-200"></div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">o</span>
+                    <div class="h-px flex-1 bg-slate-200"></div>
+                </div>
+
+                <section class="mt-6">
+                    <h3 class="text-sm font-semibold text-slate-800">Ingresar con otro servicio</h3>
+
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                            <div class="mt-4 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+                                No hay autenticación externa configurada.
+                            </div>
+                        }
+                        else
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="mt-4">
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach (var provider in Model.ExternalLogins!)
+                                    {
+                                        <button type="submit"
+                                                class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                                                name="provider" value="@provider.Name"
+                                                title="Ingresar con @provider.DisplayName">
+                                            <i class="bi bi-box-arrow-in-right me-1"></i> @provider.DisplayName
+                                        </button>
+                                    }
+                                </div>
+                            </form>
+                        }
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
